@@ -24,7 +24,7 @@ export default class StarWarsUniverse extends EventEmitter{
         return arr.length;
     }
 
-    async init(){
+    async createSpecies(){
         const spec = new Species();
         // var i = 1;
         var arr = [];
