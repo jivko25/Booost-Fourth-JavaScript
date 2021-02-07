@@ -35,7 +35,6 @@ export default class StarWarsUniverse extends EventEmitter{
                 const res = await spec.init(url, i);
                 arr.push(res);
                 this.species = arr;
-                localStorage.setItem('size', i)
         });
         for(var i = 1;i<=this._maxSpecies;i++){
         this.emit(StarWarsUniverse.events.SPECIES_CREATED)
@@ -47,6 +46,6 @@ export default class StarWarsUniverse extends EventEmitter{
         // this.emit(StarWarsUniverse.events.SPECIES_CREATED)
         // this.species = arr;
         // this.speciesCount;
-        console.log(this.species)
+        // console.log(this.species)
     }
 }
