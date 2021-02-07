@@ -24,36 +24,33 @@ export default class StarWarsUniverse extends EventEmitter{
         return arr.length;
     }
 
-    async createSpecies(){
-        const spec = new Species();
-        // var i = 1;
-        var arr = [];
-        this.on(StarWarsUniverse.events.MAX_SPECIES_REACHED, function(){
-        });
-        this.on(StarWarsUniverse.events.SPECIES_CREATED, function(){
-                // arr = this.species;
-                // var url = 'https://swapi.booost.bg/api/species/';
-                // // console.log(await spec.init(url, i));
-                // const res = await spec.init(url, i);
-                // arr.push(res);
-                // this.species = arr;
-        });
-        for(var i = 1;i<=this._maxSpecies;i++){
-                arr = this.species;
-                var url = 'https://swapi.booost.bg/api/species/';
-                // console.log(await spec.init(url, i));
-                const res = await spec.init(url, i);
-                arr.push(res);
-                this.species = arr;
-            this.emit(StarWarsUniverse.events.SPECIES_CREATED)
+
+    _onSpeciesCreated(species) {
+        this.species.push(species);
+    
+        const count = {
+          speciesCount: this.species.length,
+        };
+    
+        this.emit(StarWarsUniverse.events.SPECIES_CREATED, count);
+    
+        if (count.speciesCount >= this._maxSpecies) {
+          this.emit(StarWarsUniverse.events.MAX_SPECIES_REACHED);
+        } else {
+          this.createSpecies();
         }
-        this.emit(StarWarsUniverse.events.MAX_SPECIES_REACHED)
-        // }
-        // this.emit(StarWarsUniverse.events.SPECIES_CREATED)
-        // i++;
-        // this.emit(StarWarsUniverse.events.SPECIES_CREATED)
-        // this.species = arr;
-        // this.speciesCount;
-        // console.log(this.species)
-    }
+      }
+
+      
+  createSpecies() {
+    const species = new Species();
+
+    species.on(StarWarsUniverse.events.SPECIES_CREATED, () => {
+      this._onSpeciesCreated(species);
+    });
+
+    var url = `https://swapi.dev/api/species/${this.species.length + 1}/`;
+
+    species.init(url);
+  }
 }
