@@ -16,22 +16,16 @@ export default class Species extends EventEmitter{
         return EVENTS;
     }
 
-    async init(url, i){
-        // var endPoint = this.maxSpecies();
-        // for(var i = 1;i<=endPoint;i++){
-            var api = url + i + '/';
-            const response = await fetch(api);
-            if(response.ok){
-                const data = await response.json();
-                const spec = new Species(await data.name, await data.classification);
-                return spec;
-            }
-    }
 
-    // async maxSpecies(){
-    //     const endPointResponse = await fetch('https://swapi.booost.bg/api/species/');
-    //     const endPoint = await endPointResponse;
-    //     console.log(endPointResponse)
-    //     return endPoint;
-    // }
+    async init(url) {
+        const response = await fetch(url);
+        if(response.ok){
+        const data = await response.json();
+    
+        this.name = data.name;
+        this.classification = data.classification;
+    
+        this.emit(Species.events.SPECIES_CREATED);
+        }
+      }
 }
