@@ -28,6 +28,9 @@ export default class StarWarsUniverse extends EventEmitter{
         const spec = new Species();
         // var i = 1;
         var arr = [];
+        this.on(StarWarsUniverse.events.MAX_SPECIES_REACHED, function(){
+            console.log('max species reached');
+        });
         this.on(StarWarsUniverse.events.SPECIES_CREATED, async function(){
                 arr = this.species;
                 var url = 'https://swapi.booost.bg/api/species/';
