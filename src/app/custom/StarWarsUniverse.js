@@ -29,18 +29,23 @@ export default class StarWarsUniverse extends EventEmitter{
         // var i = 1;
         var arr = [];
         this.on(StarWarsUniverse.events.MAX_SPECIES_REACHED, function(){
-            console.log('max species reached');
         });
-        this.on(StarWarsUniverse.events.SPECIES_CREATED, async function(){
+        this.on(StarWarsUniverse.events.SPECIES_CREATED, function(){
+                // arr = this.species;
+                // var url = 'https://swapi.booost.bg/api/species/';
+                // // console.log(await spec.init(url, i));
+                // const res = await spec.init(url, i);
+                // arr.push(res);
+                // this.species = arr;
+        });
+        for(var i = 1;i<=this._maxSpecies;i++){
                 arr = this.species;
                 var url = 'https://swapi.booost.bg/api/species/';
                 // console.log(await spec.init(url, i));
                 const res = await spec.init(url, i);
                 arr.push(res);
                 this.species = arr;
-        });
-        for(var i = 1;i<=this._maxSpecies;i++){
-        this.emit(StarWarsUniverse.events.SPECIES_CREATED)
+            this.emit(StarWarsUniverse.events.SPECIES_CREATED)
         }
         this.emit(StarWarsUniverse.events.MAX_SPECIES_REACHED)
         // }
